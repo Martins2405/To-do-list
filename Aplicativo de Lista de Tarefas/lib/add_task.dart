@@ -1,40 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/provider/tasks_provider.dart';
+import 'package:provider/provider.dart';
 
 class AddTask extends StatefulWidget {
-  final List<String> tasks;
-
-  AddTask(this.tasks);
+  AddTask();
 
   @override
   _AddTaskState createState() => _AddTaskState();
 }
 
 class _AddTaskState extends State<AddTask> {
-  String newTask = '';
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar Tarefa'),
+        title: const Text('Adicionar Tarefa'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              onChanged: (value) {
-                newTask = value;
-              },
+              controller: _controller,
               onSubmitted: (value) {
-                Navigator.pop(context, newTask); // Retorna a nova tarefa para a página main
+                Provider.of<TaskProvider>(context, listen: false)
+                    .addTask(_controller.text);
+                Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, newTask); // Retorna a nova tarefa para a página main
+                Provider.of<TaskProvider>(context, listen: false)
+                    .addTask(_controller.text);
+                Navigator.of(context).pop();
               },
-              child: Text('Adicionar'),
+              child: const Text('Adicionar'),
             ),
           ],
         ),
