@@ -18,22 +18,24 @@ class _AddTaskState extends State<AddTask> {
       appBar: AppBar(
         title: const Text('Adicionar Tarefa'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               controller: _controller,
               onSubmitted: (value) {
-                Provider.of<TaskProvider>(context, listen: false)
-                    .addTask(_controller.text);
+                Provider.of<TaskProvider>(context, listen: false).addTask(_controller.text);
                 Navigator.of(context).pop();
               },
+              decoration: const InputDecoration(
+                labelText: 'Tarefa',
+              ),
             ),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                Provider.of<TaskProvider>(context, listen: false)
-                    .addTask(_controller.text);
+                Provider.of<TaskProvider>(context, listen: false).addTask(_controller.text);
                 Navigator.of(context).pop();
               },
               child: const Text('Adicionar'),
